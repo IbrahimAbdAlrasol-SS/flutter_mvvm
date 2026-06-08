@@ -1,3 +1,4 @@
+import 'package:app/features/departments/screens/departments_screen.dart';
 import 'package:app/router/route_keys.dart';
 import 'package:app/src/auth/signin_page.dart';
 import 'package:app/src/home/home_page.dart';
@@ -24,4 +25,15 @@ class SignInRoute extends GoRouteData with $SignInRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) => const SignInPage();
+}
+
+@TypedGoRoute<DepartmentsRoute>(path: '/departments')
+class DepartmentsRoute extends GoRouteData with $DepartmentsRoute {
+  const DepartmentsRoute();
+
+  static final GlobalKey<NavigatorState> $parentNavigatorKey = rootNavigatorKey;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const DepartmentsScreen();
 }
