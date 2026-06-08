@@ -12,10 +12,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'App Name';
 
   @override
+  String get actions => 'Actions';
+
+  @override
+  String get addNew => 'Add New';
+
+  @override
   String get cancel => 'Cancel';
 
   @override
   String get changeLanguage => 'Change language';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get confirmDelete => 'Confirm Delete';
+
+  @override
+  String get confirmDeleteMessage =>
+      'Are you sure you want to delete this item? This action cannot be undone.';
+
+  @override
+  String get create => 'Create';
 
   @override
   String get crop => 'Crop';
@@ -27,13 +46,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get defaultErrorMessage => 'An error occurred, please try again later';
 
   @override
+  String get delete => 'Delete';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get error => 'Error';
+
+  @override
   String get fieldRequired => 'This field is required';
+
+  @override
+  String get filters => 'Filters';
 
   @override
   String get invalidFieldValue => 'Invalid field value';
 
   @override
   String get lightMode => 'Light Mode';
+
+  @override
+  String get loading => 'Loading...';
 
   @override
   String get locationPermissionIsRequiredToContinue =>
@@ -46,7 +83,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginSuccess => 'Logged in successfully';
 
   @override
+  String get name => 'Name';
+
+  @override
+  String get networkError =>
+      'Unable to connect to server. Please check your internet connection.';
+
+  @override
+  String get noData => 'No data found';
+
+  @override
   String get noItemsFoundError => 'No items found';
+
+  @override
+  String get ofWord => 'of';
+
+  @override
+  String get page => 'Page';
 
   @override
   String get password => 'Password';
@@ -61,10 +114,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
+  String get save => 'Save';
+
+  @override
   String get search => 'Search';
 
   @override
   String get select => 'Select';
+
+  @override
+  String get sessionExpired => 'Session expired. Please log in again.';
+
+  @override
+  String get successCreate => 'Item created successfully';
+
+  @override
+  String get successDelete => 'Item deleted successfully';
+
+  @override
+  String get successUpdate => 'Item updated successfully';
 
   @override
   String get switchTheme => 'Switch theme';
@@ -82,10 +150,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeSystem => 'System';
 
   @override
+  String totalItems(Object count) {
+    return 'Total: $count items';
+  }
+
+  @override
   String get typeYourPasswordHere => 'Type your password here';
 
   @override
   String get typeYourUsenameHere => 'Type your username here';
+
+  @override
+  String get unexpectedError => 'An unexpected error occurred';
+
+  @override
+  String get update => 'Update';
 
   @override
   String get username => 'Username';
@@ -136,4 +215,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeAgain => 'Welcome again';
+
+  @override
+  String get arabicLabel => 'Arabic';
+
+  @override
+  String get englishLabel => 'English';
 }

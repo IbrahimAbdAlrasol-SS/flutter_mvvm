@@ -29,8 +29,6 @@ extension FormStateX on GlobalKey<FormState> {
   bool isNotValid() => !currentState!.validate();
 }
 
-
-
 extension NullableDateTimeExtension on DateTime? {
   String formatDate() {
     var inputFormat = DateFormat('MM/dd/yyyy');
@@ -39,14 +37,13 @@ extension NullableDateTimeExtension on DateTime? {
   }
 }
 
-extension ThemeExtension on BuildContext {
+extension BuildContextThemeX on BuildContext {
   ThemeData get theme => Theme.of(this);
 
   ColorScheme get colorScheme => theme.colorScheme;
 
   TextTheme get textTheme => theme.textTheme;
 }
-
 
 extension HttpResponseX<T> on Future<HttpResponse<T>> {
   Future<T> get data => then((value) => value.data);

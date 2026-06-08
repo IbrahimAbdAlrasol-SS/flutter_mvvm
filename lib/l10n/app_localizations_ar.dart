@@ -12,10 +12,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get appName => 'اسم التطبيق';
 
   @override
+  String get actions => 'الإجراءات';
+
+  @override
+  String get addNew => 'إضافة جديد';
+
+  @override
   String get cancel => 'إلغاء';
 
   @override
   String get changeLanguage => 'تغيير اللغة';
+
+  @override
+  String get confirm => 'تأكيد';
+
+  @override
+  String get confirmDelete => 'تأكيد الحذف';
+
+  @override
+  String get confirmDeleteMessage =>
+      'هل أنت متأكد أنك تريد حذف هذا العنصر؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get create => 'إنشاء';
 
   @override
   String get crop => 'قص الصورة';
@@ -27,13 +46,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get defaultErrorMessage => 'حدث خطأ ما, يرجى المحاولة مرة أخرى';
 
   @override
+  String get delete => 'حذف';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get error => 'خطأ';
+
+  @override
   String get fieldRequired => 'هذا الحقل مطلوب';
+
+  @override
+  String get filters => 'الفلاتر';
 
   @override
   String get invalidFieldValue => 'قيمة حقل غير صالحة';
 
   @override
   String get lightMode => 'الوضع الصباحي';
+
+  @override
+  String get loading => 'جارٍ التحميل...';
 
   @override
   String get locationPermissionIsRequiredToContinue =>
@@ -46,7 +83,22 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loginSuccess => 'تم تسجيل الدخول بنجاح';
 
   @override
+  String get name => 'الاسم';
+
+  @override
+  String get networkError => 'تعذّر الاتصال بالخادم، تحقق من اتصالك بالإنترنت.';
+
+  @override
+  String get noData => 'لا توجد بيانات';
+
+  @override
   String get noItemsFoundError => 'لا يوجد عناصر';
+
+  @override
+  String get ofWord => 'من';
+
+  @override
+  String get page => 'صفحة';
 
   @override
   String get password => 'كلمة المرور';
@@ -61,10 +113,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retry => 'إعادة المحاولة';
 
   @override
+  String get save => 'حفظ';
+
+  @override
   String get search => 'بحث';
 
   @override
   String get select => 'اختر';
+
+  @override
+  String get sessionExpired => 'انتهت الجلسة. يرجى تسجيل الدخول مجدداً.';
+
+  @override
+  String get successCreate => 'تمت الإضافة بنجاح';
+
+  @override
+  String get successDelete => 'تم الحذف بنجاح';
+
+  @override
+  String get successUpdate => 'تم التعديل بنجاح';
 
   @override
   String get switchTheme => 'تغيير اللون';
@@ -82,10 +149,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get themeSystem => 'النظام';
 
   @override
+  String totalItems(Object count) {
+    return 'الإجمالي: $count عنصر';
+  }
+
+  @override
   String get typeYourPasswordHere => 'أدخل كلمة المرور هنا';
 
   @override
   String get typeYourUsenameHere => 'ادخل اسم المستخدم هنا';
+
+  @override
+  String get unexpectedError => 'حدث خطأ غير متوقع';
+
+  @override
+  String get update => 'تحديث';
 
   @override
   String get username => 'اسم المستخدم';
@@ -136,4 +214,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get welcomeAgain => 'مرحباً بك مرة أخرى';
+
+  @override
+  String get arabicLabel => 'العربية';
+
+  @override
+  String get englishLabel => 'الإنجليزية';
 }

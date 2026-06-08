@@ -104,6 +104,18 @@ abstract class AppLocalizations {
   /// **'App Name'**
   String get appName;
 
+  /// No description provided for @actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actions;
+
+  /// No description provided for @addNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New'**
+  String get addNew;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
@@ -115,6 +127,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change language'**
   String get changeLanguage;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get confirmDelete;
+
+  /// No description provided for @confirmDeleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this item? This action cannot be undone.'**
+  String get confirmDeleteMessage;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
 
   /// No description provided for @crop.
   ///
@@ -134,11 +170,41 @@ abstract class AppLocalizations {
   /// **'An error occurred, please try again later'**
   String get defaultErrorMessage;
 
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
   /// No description provided for @fieldRequired.
   ///
   /// In en, this message translates to:
   /// **'This field is required'**
   String get fieldRequired;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
 
   /// No description provided for @invalidFieldValue.
   ///
@@ -151,6 +217,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Light Mode'**
   String get lightMode;
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
 
   /// No description provided for @locationPermissionIsRequiredToContinue.
   ///
@@ -170,11 +242,41 @@ abstract class AppLocalizations {
   /// **'Logged in successfully'**
   String get loginSuccess;
 
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @networkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to connect to server. Please check your internet connection.'**
+  String get networkError;
+
+  /// No description provided for @noData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data found'**
+  String get noData;
+
   /// No description provided for @noItemsFoundError.
   ///
   /// In en, this message translates to:
   /// **'No items found'**
   String get noItemsFoundError;
+
+  /// No description provided for @ofWord.
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get ofWord;
+
+  /// No description provided for @page.
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get page;
 
   /// No description provided for @password.
   ///
@@ -200,6 +302,12 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get retry;
 
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
   /// No description provided for @search.
   ///
   /// In en, this message translates to:
@@ -211,6 +319,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select'**
   String get select;
+
+  /// No description provided for @sessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired. Please log in again.'**
+  String get sessionExpired;
+
+  /// No description provided for @successCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Item created successfully'**
+  String get successCreate;
+
+  /// No description provided for @successDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Item deleted successfully'**
+  String get successDelete;
+
+  /// No description provided for @successUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Item updated successfully'**
+  String get successUpdate;
 
   /// No description provided for @switchTheme.
   ///
@@ -242,6 +374,12 @@ abstract class AppLocalizations {
   /// **'System'**
   String get themeSystem;
 
+  /// No description provided for @totalItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {count} items'**
+  String totalItems(Object count);
+
   /// No description provided for @typeYourPasswordHere.
   ///
   /// In en, this message translates to:
@@ -253,6 +391,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Type your username here'**
   String get typeYourUsenameHere;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred'**
+  String get unexpectedError;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
 
   /// No description provided for @username.
   ///
@@ -343,6 +493,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome again'**
   String get welcomeAgain;
+
+  /// No description provided for @arabicLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabicLabel;
+
+  /// No description provided for @englishLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get englishLabel;
 }
 
 class _AppLocalizationsDelegate

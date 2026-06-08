@@ -27,7 +27,7 @@
   "networkError": "Unable to connect to server. Please check your internet connection.",
   "noData": "No data found",
   "noItemsFoundError": "No items found",
-  "of": "of",
+  "ofWord": "of",
   "page": "Page",
   "password": "Password",
   "pickDate": "Pick date",
