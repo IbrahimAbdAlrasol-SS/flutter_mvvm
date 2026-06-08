@@ -12,7 +12,7 @@ class Authenticator extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final isSignedIn = authentication.isSignedIn();
-    final token = authentication.build()?.token;
+    final token = authentication.state?.token;
 
     if (isSignedIn) options.headers['Authorization'] = 'Bearer $token';
 

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:app/data/providers/authentication_provider.dart';
 import 'package:app/data/providers/settings_provider.dart';
 import 'package:app/data/services/clients/_clients.dart';
@@ -39,7 +37,7 @@ String _successMessageForMethod(String method) {
   }
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Dio dio(Ref ref) {
   final dio = Dio();
   dio
@@ -123,17 +121,7 @@ Dio dio(Ref ref) {
               Utils.showErrorSnackBar('تعذّر الاتصال بالخادم، تحقق من اتصالك بالإنترنت');
               break;
             case DioExceptionType.unknown:
-              String message = 'حدث خطأ ما';
-              if (e.error is FormatException) {
-                message = (e.error as FormatException).toString().replaceRange(0, 54, '').replaceAll('^', '');
-              } else {
-                final data = e.response?.data;
-                if (data is Map<String, dynamic>) {
-                  message = (data['message'] ?? message).toString();
-                } else if (data is String) {
-                  message = json.decode(json.encode(data)) as String? ?? message;
-                }
-              }
+              final message = _extractErrorMessage(e);
               logger.e('Dio unknown error', error: message, stackTrace: StackTrace.current);
               Utils.showErrorSnackBar(message);
               handler.reject(

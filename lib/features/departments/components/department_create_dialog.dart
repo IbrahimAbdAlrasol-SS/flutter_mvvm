@@ -1,8 +1,5 @@
-import 'package:app/common/widgets/app_dialog.dart';
-import 'package:app/common/widgets/app_field/app_input_field.dart';
+import 'package:app/common_lib.dart';
 import 'package:app/features/departments/providers/department_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Dialog for creating a new department.
 ///
@@ -154,11 +151,6 @@ void showDepartmentCreateDialog(BuildContext context) {
   showDialog<void>(
     context: context,
     barrierDismissible: false,
-    builder: (_) => const Dialog(
-      child: Padding(
-        padding: EdgeInsets.all(0),
-        child: DepartmentCreateDialog(),
-      ),
-    ),
+    builder: (_) => const Dialog(child: DepartmentCreateDialog()),
   );
 }

@@ -72,6 +72,9 @@ class _AppAutoCompleteFieldState extends State<AppAutoCompleteField> {
           initialValue: _selected != null ? TextEditingValue(text: _selected!.label) : null,
           optionsBuilder: (textEditingValue) async {
             if (!widget.enabled) return const [];
+            if (_selected != null && textEditingValue.text == _selected!.label) {
+              return const [];
+            }
             return widget.optionsLoader(textEditingValue.text);
           },
           onSelected: (opt) {

@@ -1,22 +1,9 @@
 import 'package:app/common/widgets/app_field/app_input_field.dart';
+import 'package:app/data/models/multi_lang_value.dart';
 import 'package:app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
-/// Model holding translated text in Arabic and English.
-class MultiLangValue {
-  const MultiLangValue({this.ar = '', this.en = ''});
-
-  final String ar;
-  final String en;
-
-  MultiLangValue copyWith({String? ar, String? en}) =>
-      MultiLangValue(ar: ar ?? this.ar, en: en ?? this.en);
-
-  Map<String, String> toJson() => {'ar': ar, 'en': en};
-
-  @override
-  String toString() => 'MultiLangValue(ar: $ar, en: $en)';
-}
+export 'package:app/data/models/multi_lang_value.dart';
 
 /// Two [AppInputField]s side-by-side (Arabic + English) that together produce
 /// a [MultiLangValue].  Notify the parent of changes via [onChanged].

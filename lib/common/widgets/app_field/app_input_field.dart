@@ -97,6 +97,15 @@ class AppTextAreaField extends StatelessWidget {
     this.minLines = 3,
     this.maxLines = 6,
     this.maxLength,
+    this.readOnly = false,
+    this.enabled,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.inputFormatters,
+    this.focusNode,
+    this.onTap,
+    this.textInputAction,
+    this.autofocus = false,
   });
 
   final TextEditingController? controller;
@@ -109,6 +118,15 @@ class AppTextAreaField extends StatelessWidget {
   final int minLines;
   final int maxLines;
   final int? maxLength;
+  final bool readOnly;
+  final bool? enabled;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusNode;
+  final VoidCallback? onTap;
+  final TextInputAction? textInputAction;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +142,15 @@ class AppTextAreaField extends StatelessWidget {
       minLines: minLines,
       maxLength: maxLength,
       keyboardType: TextInputType.multiline,
+      readOnly: readOnly,
+      enabled: enabled,
+      prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
+      inputFormatters: inputFormatters,
+      focusNode: focusNode,
+      onTap: onTap,
+      textInputAction: textInputAction,
+      autofocus: autofocus,
     );
   }
 }

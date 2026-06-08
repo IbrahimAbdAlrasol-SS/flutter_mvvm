@@ -1,9 +1,6 @@
-import 'package:app/common/widgets/app_dialog.dart';
-import 'package:app/common/widgets/app_field/app_input_field.dart';
+import 'package:app/common_lib.dart';
 import 'package:app/features/departments/models/department_model.dart';
 import 'package:app/features/departments/providers/department_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Dialog for editing an existing [DepartmentModel].
 ///
@@ -42,13 +39,13 @@ class _DepartmentEditDialogState extends ConsumerState<DepartmentEditDialog> {
   }
 
   void _fill(DepartmentModel dept) {
-    _nameCtrl.text = dept.name;
-    _codeCtrl.text = dept.code ?? '';
-    _descCtrl.text = dept.description ?? '';
-    _locationCtrl.text = dept.location ?? '';
-    _emailCtrl.text = dept.contactEmail ?? '';
-    _phoneCtrl.text = dept.contactPhone ?? '';
-    _budgetCtrl.text = dept.budget?.toString() ?? '';
+    _nameCtrl.setTextSafely(dept.name);
+    _codeCtrl.setTextSafely(dept.code ?? '');
+    _descCtrl.setTextSafely(dept.description ?? '');
+    _locationCtrl.setTextSafely(dept.location ?? '');
+    _emailCtrl.setTextSafely(dept.contactEmail ?? '');
+    _phoneCtrl.setTextSafely(dept.contactPhone ?? '');
+    _budgetCtrl.setTextSafely(dept.budget?.toString() ?? '');
   }
 
   Future<void> _submit() async {

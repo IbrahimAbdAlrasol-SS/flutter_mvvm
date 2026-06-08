@@ -1,14 +1,8 @@
-import 'package:app/common/widgets/app_crud.dart';
-import 'package:app/common/widgets/app_dialog.dart';
-import 'package:app/common/widgets/app_field/app_input_field.dart';
-import 'package:app/common/widgets/app_table.dart';
+import 'package:app/common_lib.dart';
 import 'package:app/features/departments/components/department_create_dialog.dart';
 import 'package:app/features/departments/components/department_edit_dialog.dart';
 import 'package:app/features/departments/models/department_model.dart';
 import 'package:app/features/departments/providers/department_provider.dart';
-import 'package:app/utils/extensions.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Thin orchestration screen for the Departments domain.
 ///
