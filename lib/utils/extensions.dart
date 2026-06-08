@@ -92,6 +92,16 @@ extension DateTimeX on DateTime {
       timeago.format(toLocal(), locale: locale).toUpperCase();
 }
 
+extension TextEditingControllerX on TextEditingController {
+  void setTextSafely(String newText) {
+    if (value.text == newText) return;
+    value = TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}
+
 extension AdditionalColors on ColorScheme {
   Color get primaryText => const Color(0xff035EC9);
   Color get secondaryText => const Color(0xFF7C7C7C);

@@ -19,9 +19,7 @@ GoRouter configureRootRouter(
     routes: $appRoutes,
     redirect: (BuildContext context, GoRouterState state) {
       final isSignedIn = ref.read(authenticationProvider.notifier).isSignedIn();
-      final signingIn =
-          state.matchedLocation == const SignInRoute().location ||
-              state.uri.path == const SignInRoute().location;
+      final signingIn = state.matchedLocation == const SignInRoute().location;
 
       if (!isSignedIn) {
         if (!signingIn) {

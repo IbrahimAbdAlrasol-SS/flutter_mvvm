@@ -37,7 +37,20 @@ class _HomePageState extends ConsumerState<HomePage> {
                       : const Locale('en'))),
               icon: const Icon(Icons.language),
               label: Text(context.l10n.localeName),
-            )
+            ),
+            const SizedBox(height: 24),
+            const Divider(),
+            const SizedBox(height: 12),
+            Text(
+              'Features',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            const SizedBox(height: 8),
+            FilledButton.icon(
+              onPressed: () => const DepartmentsRoute().go(context),
+              icon: const Icon(Icons.business_outlined),
+              label: const Text('Departments'),
+            ),
           ],
         ),
       ),
