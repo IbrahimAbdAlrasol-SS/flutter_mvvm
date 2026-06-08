@@ -96,7 +96,10 @@ Dio dio(Ref ref) {
         },
         onError: (e, handler) async {
           if (e.response?.statusCode == 401) {
+            Utils.showErrorSnackBar('انتهت صلاحية جلستك، يرجى تسجيل الدخول مجدداً');
             ref.read(authenticationProvider.notifier).logout();
+            handler.reject(e);
+            return;
           }
 
           switch (e.type) {

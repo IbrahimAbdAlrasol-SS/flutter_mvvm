@@ -266,6 +266,7 @@ part 'department_provider.g.dart';
 
 @freezed
 abstract class DepartmentState with _$DepartmentState {
+  const DepartmentState._();              // ← REQUIRED: enables custom getters on the class
   const factory DepartmentState({
     @Default([]) List<DepartmentModel> items,
     @Default(false) bool isLoading,
@@ -310,8 +311,8 @@ class DepartmentNotifier extends _$DepartmentNotifier {
     state = state.copyWith(isLoading: true);
     try {
       await ref.read(departmentClientProvider).createDepartment(data);
-      state = state.copyWith(isLoading: false, isCreateOpen: false);
-      await fetch();  // ← always refetch after mutation
+      state = state.copyWith(isCreateOpen: false);  // ← do NOT set isLoading: false here
+      await fetch();  // ← fetch() sets isLoading: false when done (no flicker)
     } catch (e) {
       state = state.copyWith(isLoading: false);
       rethrow;        // ← rethrow so the form component can handle field-level errors
@@ -322,7 +323,7 @@ class DepartmentNotifier extends _$DepartmentNotifier {
     state = state.copyWith(isLoading: true);
     try {
       await ref.read(departmentClientProvider).updateDepartment(id, data);
-      state = state.copyWith(isLoading: false, isEditOpen: false);
+      state = state.copyWith(isEditOpen: false, selected: null);
       await fetch();
     } catch (e) {
       state = state.copyWith(isLoading: false);
@@ -334,7 +335,7 @@ class DepartmentNotifier extends _$DepartmentNotifier {
     state = state.copyWith(isLoading: true);
     try {
       await ref.read(departmentClientProvider).deleteDepartment(id);
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(selected: null);  // ← clear selected to avoid stale reference
       await fetch();
     } catch (e) {
       state = state.copyWith(isLoading: false);
@@ -522,7 +523,7 @@ class _DepartmentsScreenState extends ConsumerState<DepartmentsScreen> {
   Widget _cell(DepartmentModel item, String key) {
     final notifier = ref.read(departmentNotifierProvider.notifier);
     return switch (key) {
-      'name' => Text(item.name, style: const TextStyle(fontWeight: FontWeight.w500)),
+      'name' => Text(item.name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
       'code' => Text(item.code ?? '—'),
       'actions' => Row(
           mainAxisSize: MainAxisSize.min,
@@ -552,9 +553,9 @@ class _DepartmentsScreenState extends ConsumerState<DepartmentsScreen> {
   Future<void> _confirmDelete(DepartmentModel item) async {
     final confirmed = await showConfirmDialog(
       context,
-      title: 'تأكيد الحذف',
-      message: 'هل تريد حذف "${item.name}"؟',
-      confirmLabel: 'حذف',
+      title: context.l10n.confirmDelete,
+      message: context.l10n.confirmDeleteMessage,
+      confirmLabel: context.l10n.delete,
       confirmColor: Theme.of(context).colorScheme.error,
     );
     if (confirmed == true && mounted) {
@@ -572,11 +573,14 @@ class _DepartmentsScreenState extends ConsumerState<DepartmentsScreen> {
         title: 'الأقسام',
         addButtonText: 'إضافة قسم',
         totalCount: state.totalCount,
-        onAddPressed: () => showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) => const Dialog(child: DepartmentCreateDialog()),
-        ),
+        onAddPressed: () {
+          notifier.openCreate();  // ← MUST call this BEFORE showDialog
+          showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const Dialog(child: DepartmentCreateDialog()),
+          );
+        },
         filters: AppInputField(
           controller: _searchCtrl,
           label: 'بحث',
@@ -694,7 +698,9 @@ AppCrud(
 )
 ```
 
-`AppCrud` uses `Column` layout with `Expanded` for the child. Wrap it in a `Scaffold(body: AppCrud(...))`.
+`AppCrud` uses `Column` layout with `Expanded` for the child. Wrap it in a `Scaffold(body: AppCrud(...))`. Pagination is only visible when `totalPages > 1` — if there is only one page it hides automatically.
+
+> **Warning**: `AppCrud` requires a bounded-height parent (the `Expanded` inside it needs a `Column`/`Flex` parent). `Scaffold(body: AppCrud(...))` works. `AppCrud` inside another `Column` without `Expanded` wrapping will overflow.
 
 ### `AppDialog` + `AppDialogContent` — `lib/common/widgets/app_dialog.dart`
 
@@ -779,10 +785,13 @@ AppAutoCompleteField(
   },
   onChanged: (id) => setState(() => _managerId = id as int?),
   initialValue: _selectedManager,   // AppSelectOption? for pre-fill
+  validator: (opt) => opt == null ? 'مطلوب' : null,
 )
 ```
 
 `AppSelectOption` has: `id` (dynamic), `label` (String).
+
+> **Important**: `AppAutoCompleteField` participates in `Form.validate()` via its internal `TextFormField`. The `validator` callback receives the selected `AppSelectOption?`. Call `_formKey.currentState?.validate()` as normal — it will trigger the validator.
 
 ### `AppMultiLangField` — `lib/common/widgets/app_field/app_multi_lang_field.dart`
 
@@ -805,8 +814,8 @@ StatCard(
   title: 'إجمالي الأقسام',
   value: '24',
   icon: Icons.business_outlined,
-  iconColor: Colors.blue,         // optional
-  trend: 0.05,                    // positive = green up arrow, negative = red down arrow
+  iconColor: Theme.of(context).colorScheme.primary,  // ← NEVER use Colors.*, always from theme
+  trend: 0.05,    // > 0 = green up arrow, < 0 = red down arrow, 0 or null = hidden
   trendLabel: '+5% هذا الشهر',
   subtitle: 'آخر تحديث: اليوم',
 )
@@ -849,11 +858,23 @@ class UsersRoute extends GoRouteData with $UsersRoute {
 // 2. In app_router.dart, add to the export show list:
 export 'routes/app_routes.dart' show HomeRoute, SignInRoute, DepartmentsRoute, UsersRoute;
 
-// 3. In app_routes.g.dart, add:
-List<RouteBase> get $appRoutes => [...existing..., $usersRoute];
-// and add the mixin + route definition following the exact pattern of $departmentsRoute
-
-// 4. Run build_runner (or write the .g.dart manually)
+// 3. Run build_runner (preferred):
+// dart run build_runner build --delete-conflicting-outputs
+//
+// OR manually add to app_routes.g.dart:
+//   a. Add the mixin:
+//      mixin $UsersRoute on GoRouteData {
+//        static const String _path = '/users';
+//        @override String get location => _path;
+//      }
+//   b. Add the getter:
+//      RouteBase get $usersRoute => GoRoute(
+//        path: '/users',
+//        parentNavigatorKey: UsersRoute.$parentNavigatorKey,
+//        builder: (context, state) => const UsersRoute().build(context, state),
+//      );
+//   c. Update $appRoutes:
+//      List<RouteBase> get $appRoutes => [$homeRoute, $signInRoute, $departmentsRoute, $usersRoute];
 ```
 
 **Navigation from a widget**: `const DepartmentsRoute().go(context)` or `.push(context)` or `.pushReplacement(context)`.
@@ -928,6 +949,16 @@ context.theme          // = Theme.of(context)
 context.colorScheme    // = Theme.of(context).colorScheme
 context.textTheme      // = Theme.of(context).textTheme
 context.l10n           // = AppLocalizations.of(context)
+
+// Extra semantic colors (from AdditionalColors extension on ColorScheme):
+context.colorScheme.successText   // = green for positive trends / success states
+context.colorScheme.dangerColor   // = red for danger states
+context.colorScheme.primaryText   // = blue for primary text
+context.colorScheme.secondaryText // = grey for secondary text
+
+// Safe text controller update (prevents Android crash when new text is shorter):
+_ctrl.setTextSafely(newValue);    // ← ALWAYS use this when setting from external state
+// NEVER: _ctrl.text = newValue;  // crashes on Android when cursor > new text length
 ```
 
 **Never use**: `Colors.blue`, `Color(0xFF...)`, `TextStyle(fontSize: 16, color: Colors.grey)`, `Directionality(...)`.
@@ -1052,7 +1083,30 @@ Follow the template in "Layer 4: Components" above.
 
 **Step 7** — Edit dialog:
 Create `lib/features/<name>/components/<name>_edit_dialog.dart`.
-Same structure as create, but pre-fill controllers from `state.selected` using `addPostFrameCallback`.
+Same structure as create, but pre-fill controllers from `state.selected`.
+
+**Critical pre-fill pattern** (copy this exactly — naive `addPostFrameCallback` re-fills on every rebuild):
+```dart
+NameModel? _prefilled;
+
+@override
+Widget build(BuildContext context) {
+  final state = ref.watch(nameNotifierProvider);
+  if (!state.isEditOpen) return const SizedBox.shrink();
+
+  // Guard: only fill once per selected item, not on every rebuild
+  if (state.selected != null && _prefilled != state.selected) {
+    _prefilled = state.selected;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _fill(state.selected!));
+  }
+  // ...
+}
+
+void _fill(NameModel item) {
+  _nameCtrl.setTextSafely(item.name);  // ← use setTextSafely, never .text =
+}
+```
+
 Call `notifier.update(id, data)` instead of `notifier.create(data)`.
 
 **Step 8** — Screen + route:

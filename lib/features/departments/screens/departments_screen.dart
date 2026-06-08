@@ -6,6 +6,7 @@ import 'package:app/features/departments/components/department_create_dialog.dar
 import 'package:app/features/departments/components/department_edit_dialog.dart';
 import 'package:app/features/departments/models/department_model.dart';
 import 'package:app/features/departments/providers/department_provider.dart';
+import 'package:app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -56,13 +57,16 @@ class _DepartmentsScreenState extends ConsumerState<DepartmentsScreen> {
     final notifier = ref.read(departmentNotifierProvider.notifier);
     switch (key) {
       case 'name':
-        return Text(dept.name, style: const TextStyle(fontWeight: FontWeight.w500));
+        return Text(
+          dept.name,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+        );
       case 'code':
         return Text(dept.code ?? '—');
       case 'location':
         return Text(dept.location ?? '—');
       case 'budget':
-        return Text(dept.budget != null ? dept.budget!.toStringAsFixed(0) : '—');
+        return Text(dept.budget != null ? dept.budget!.toStringAsFixed(2) : '—');
       case 'contactEmail':
         return Text(dept.contactEmail ?? '—');
       case 'actions':
@@ -71,7 +75,7 @@ class _DepartmentsScreenState extends ConsumerState<DepartmentsScreen> {
           children: [
             IconButton(
               icon: const Icon(Icons.edit_outlined, size: 18),
-              tooltip: 'تعديل',
+              tooltip: context.l10n.edit,
               onPressed: () {
                 notifier.openEdit(dept);
                 showDepartmentEditDialog(context);
@@ -79,7 +83,7 @@ class _DepartmentsScreenState extends ConsumerState<DepartmentsScreen> {
             ),
             IconButton(
               icon: const Icon(Icons.delete_outline, size: 18),
-              tooltip: 'حذف',
+              tooltip: context.l10n.delete,
               color: Theme.of(context).colorScheme.error,
               onPressed: () => _confirmDelete(dept),
             ),
@@ -93,9 +97,9 @@ class _DepartmentsScreenState extends ConsumerState<DepartmentsScreen> {
   Future<void> _confirmDelete(DepartmentModel dept) async {
     final confirmed = await showConfirmDialog(
       context,
-      title: 'تأكيد الحذف',
-      message: 'هل أنت متأكد أنك تريد حذف "${dept.name}"؟',
-      confirmLabel: 'حذف',
+      title: context.l10n.confirmDelete,
+      message: context.l10n.confirmDeleteMessage,
+      confirmLabel: context.l10n.delete,
       confirmColor: Theme.of(context).colorScheme.error,
     );
     if (confirmed == true && mounted) {

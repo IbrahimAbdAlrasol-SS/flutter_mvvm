@@ -1,5 +1,6 @@
+import 'package:app/common/widgets/app_field/app_input_field.dart';
+import 'package:app/utils/extensions.dart';
 import 'package:flutter/material.dart';
-import 'app_input_field.dart';
 
 /// Model holding translated text in Arabic and English.
 class MultiLangValue {
@@ -52,10 +53,10 @@ class _AppMultiLangFieldState extends State<AppMultiLangField> {
   void didUpdateWidget(AppMultiLangField old) {
     super.didUpdateWidget(old);
     if (widget.value?.ar != old.value?.ar && widget.value?.ar != _arCtrl.text) {
-      _arCtrl.text = widget.value?.ar ?? '';
+      _arCtrl.setTextSafely(widget.value?.ar ?? '');
     }
     if (widget.value?.en != old.value?.en && widget.value?.en != _enCtrl.text) {
-      _enCtrl.text = widget.value?.en ?? '';
+      _enCtrl.setTextSafely(widget.value?.en ?? '');
     }
   }
 
@@ -93,6 +94,11 @@ class _AppMultiLangFieldState extends State<AppMultiLangField> {
                 label: 'العربية',
                 onChanged: (_) => _notify(),
                 textInputAction: TextInputAction.next,
+                validator: widget.validator != null
+                    ? (_) => widget.validator!(
+                          MultiLangValue(ar: _arCtrl.text, en: _enCtrl.text),
+                        )
+                    : null,
               ),
             ),
             const SizedBox(width: 12),

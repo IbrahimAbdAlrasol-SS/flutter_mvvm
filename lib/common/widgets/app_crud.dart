@@ -1,5 +1,6 @@
+import 'package:app/common/widgets/base_pagination.dart';
+import 'package:app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'base_pagination.dart';
 
 /// CRUD page shell — mirrors the Nuxt `AppCrud` component.
 ///
@@ -44,7 +45,9 @@ class AppCrud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final showPagination = totalPages != null && totalPages! > 1 && onPageChanged != null;
+    final l10n = AppLocalizations.of(context)!;
+    final showPagination =
+        totalPages != null && totalPages! > 1 && onPageChanged != null && currentPage != null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -74,7 +77,7 @@ class AppCrud extends StatelessWidget {
                       ),
                       if (totalCount != null)
                         Text(
-                          'الإجمالي: $totalCount',
+                          l10n.totalItems(totalCount!),
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
                           ),
@@ -86,7 +89,7 @@ class AppCrud extends StatelessWidget {
                 FilledButton.icon(
                   onPressed: onAddPressed,
                   icon: const Icon(Icons.add, size: 18),
-                  label: Text(addButtonText ?? 'إضافة'),
+                  label: Text(addButtonText ?? l10n.addNew),
                 ),
             ],
           ),

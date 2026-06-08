@@ -10,6 +10,7 @@ part 'department_provider.g.dart';
 
 @freezed
 abstract class DepartmentState with _$DepartmentState {
+  const DepartmentState._();
   const factory DepartmentState({
     @Default([]) List<DepartmentModel> items,
     @Default(false) bool isLoading,
@@ -61,7 +62,7 @@ class DepartmentNotifier extends _$DepartmentNotifier {
     state = state.copyWith(isLoading: true);
     try {
       await ref.read(departmentClientProvider).createDepartment(data);
-      state = state.copyWith(isLoading: false, isCreateOpen: false);
+      state = state.copyWith(isCreateOpen: false);
       await fetch();
     } catch (e) {
       state = state.copyWith(isLoading: false);
@@ -73,7 +74,7 @@ class DepartmentNotifier extends _$DepartmentNotifier {
     state = state.copyWith(isLoading: true);
     try {
       await ref.read(departmentClientProvider).updateDepartment(id, data);
-      state = state.copyWith(isLoading: false, isEditOpen: false);
+      state = state.copyWith(isEditOpen: false, selected: null);
       await fetch();
     } catch (e) {
       state = state.copyWith(isLoading: false);
@@ -85,7 +86,7 @@ class DepartmentNotifier extends _$DepartmentNotifier {
     state = state.copyWith(isLoading: true);
     try {
       await ref.read(departmentClientProvider).deleteDepartment(id);
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(selected: null);
       await fetch();
     } catch (e) {
       state = state.copyWith(isLoading: false);

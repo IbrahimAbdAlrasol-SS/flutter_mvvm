@@ -52,7 +52,7 @@ class BasePagination extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _NavButton(
-          icon: Icons.chevron_left,
+          icon: Icons.arrow_back_ios,
           onPressed: currentPage > 1 ? () => onPageChanged(currentPage - 1) : null,
         ),
         const SizedBox(width: 4),
@@ -80,7 +80,7 @@ class BasePagination extends StatelessWidget {
         }),
         const SizedBox(width: 4),
         _NavButton(
-          icon: Icons.chevron_right,
+          icon: Icons.arrow_forward_ios,
           onPressed: currentPage < totalPages ? () => onPageChanged(currentPage + 1) : null,
         ),
       ],

@@ -1,3 +1,4 @@
+import 'package:app/utils/extensions.dart';
 import 'package:flutter/material.dart';
 
 /// Dashboard metric card — mirrors the Nuxt `StatCard` component.
@@ -31,16 +32,10 @@ class StatCard extends StatelessWidget {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
 
-    final trendColor = trend == null
-        ? null
-        : trend! >= 0
-            ? Colors.green
-            : scheme.error;
-    final trendIcon = trend == null
-        ? null
-        : trend! >= 0
-            ? Icons.trending_up
-            : Icons.trending_down;
+    final hasTrend = trend != null && trend != 0.0;
+    final trendColor = !hasTrend ? null : trend! > 0 ? scheme.successText : scheme.error;
+    final trendIcon =
+        !hasTrend ? null : trend! > 0 ? Icons.trending_up : Icons.trending_down;
 
     return Card(
       elevation: 0,
@@ -68,7 +63,7 @@ class StatCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: (iconColor ?? scheme.primary).withOpacity(0.1),
+                      color: (iconColor ?? scheme.primary).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(icon, size: 20, color: iconColor ?? scheme.primary),

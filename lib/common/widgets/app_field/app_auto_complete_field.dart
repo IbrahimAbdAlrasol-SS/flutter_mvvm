@@ -53,12 +53,12 @@ class _AppAutoCompleteFieldState extends State<AppAutoCompleteField> {
     _selected = widget.initialValue;
   }
 
-  void _handleSelection(AppSelectOption option) {
-    setState(() {
-      _selected = option;
-      _validationError = widget.validator?.call(option);
-    });
-    widget.onChanged?.call(option.id);
+  @override
+  void didUpdateWidget(AppAutoCompleteField old) {
+    super.didUpdateWidget(old);
+    if (widget.initialValue != old.initialValue && widget.initialValue != _selected) {
+      setState(() => _selected = widget.initialValue);
+    }
   }
 
   @override
@@ -74,17 +74,20 @@ class _AppAutoCompleteFieldState extends State<AppAutoCompleteField> {
             if (!widget.enabled) return const [];
             return widget.optionsLoader(textEditingValue.text);
           },
-          onSelected: _handleSelection,
+          onSelected: (opt) {
+            setState(() {
+              _selected = opt;
+              _validationError = null;
+            });
+            widget.onChanged?.call(opt.id);
+          },
           fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
             return TextFormField(
               controller: controller,
               focusNode: focusNode,
               enabled: widget.enabled,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (_) {
-                _validationError = widget.validator?.call(_selected);
-                return _validationError;
-              },
+              validator: (_) => widget.validator?.call(_selected),
               decoration: InputDecoration(
                 labelText: widget.label,
                 hintText: widget.hint ?? widget.label,
@@ -118,16 +121,6 @@ class _AppAutoCompleteFieldState extends State<AppAutoCompleteField> {
             );
           },
         ),
-        if (_validationError != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 4, left: 12),
-            child: Text(
-              _validationError!,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.error,
-              ),
-            ),
-          ),
       ],
     );
   }

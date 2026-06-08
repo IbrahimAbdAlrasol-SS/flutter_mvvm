@@ -145,7 +145,7 @@ return $default(_that.items,_that.isLoading,_that.page,_that.pageSize,_that.tota
 /// @nodoc
 
 class _DepartmentState extends DepartmentState {
-  const _DepartmentState({final  List<DepartmentModel> items = const [], this.isLoading = false, this.page = 1, this.pageSize = 10, this.totalCount = 0, this.isCreateOpen = false, this.isEditOpen = false, this.selected, this.nameFilter = ''}): _items = items;
+  const _DepartmentState({final  List<DepartmentModel> items = const [], this.isLoading = false, this.page = 1, this.pageSize = 10, this.totalCount = 0, this.isCreateOpen = false, this.isEditOpen = false, this.selected, this.nameFilter = ''}): _items = items, super._();
 
 @override final  List<DepartmentModel> _items;
  @override List<DepartmentModel> get items {

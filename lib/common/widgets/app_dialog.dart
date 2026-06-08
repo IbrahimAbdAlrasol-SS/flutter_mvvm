@@ -1,3 +1,4 @@
+import 'package:app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// A standardised modal dialog wrapper.
@@ -71,7 +72,7 @@ class AppDialogContent extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
-            tooltip: 'إغلاق',
+            tooltip: MaterialLocalizations.of(context).closeButtonLabel,
           ),
         ],
       ),
@@ -98,10 +99,11 @@ Future<bool?> showConfirmDialog(
   BuildContext context, {
   required String title,
   required String message,
-  String confirmLabel = 'تأكيد',
-  String cancelLabel = 'إلغاء',
+  String? confirmLabel,
+  String? cancelLabel,
   Color? confirmColor,
 }) {
+  final l10n = AppLocalizations.of(context)!;
   return showDialog<bool>(
     context: context,
     builder: (ctx) => AlertDialog(
@@ -110,14 +112,14 @@ Future<bool?> showConfirmDialog(
       actions: [
         TextButton(
           onPressed: () => Navigator.of(ctx).pop(false),
-          child: Text(cancelLabel),
+          child: Text(cancelLabel ?? l10n.cancel),
         ),
         FilledButton(
           style: confirmColor != null
               ? FilledButton.styleFrom(backgroundColor: confirmColor)
               : null,
           onPressed: () => Navigator.of(ctx).pop(true),
-          child: Text(confirmLabel),
+          child: Text(confirmLabel ?? l10n.confirm),
         ),
       ],
     ),

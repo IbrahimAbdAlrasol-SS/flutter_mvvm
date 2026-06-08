@@ -1,3 +1,4 @@
+import 'package:app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Column definition for [AppTable].
@@ -106,6 +107,7 @@ class _DataBody<T> extends StatelessWidget {
                 ),
               )
               .toList(),
+          showCheckboxColumn: false,
           rows: items
               .map(
                 (item) => DataRow(
@@ -130,29 +132,18 @@ class _TableSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseColor = Theme.of(context).colorScheme.surfaceContainerHighest;
+    final theme = Theme.of(context);
+    final headerColor = theme.colorScheme.surfaceContainerHighest;
+    final barColor = theme.colorScheme.onSurface.withValues(alpha: 0.12);
     return Column(
       children: [
-        // Header skeleton
         Container(
           height: 48,
-          color: baseColor,
-          child: Row(
-            children: columns
-                .map(
-                  (col) => Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: _SkeletonBar(width: col.width ?? 80, height: 12, color: baseColor),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
+          color: headerColor,
         ),
         ...List.generate(
           rowCount,
-          (i) => _SkeletonRow(columns: columns, opacity: 1 - i * 0.1),
+          (i) => _SkeletonRow(columns: columns, barColor: barColor, opacity: 1 - i * 0.1),
         ),
       ],
     );
@@ -160,9 +151,10 @@ class _TableSkeleton extends StatelessWidget {
 }
 
 class _SkeletonRow extends StatelessWidget {
-  const _SkeletonRow({required this.columns, this.opacity = 1});
+  const _SkeletonRow({required this.columns, required this.barColor, this.opacity = 1});
 
   final List<AppTableColumn> columns;
+  final Color barColor;
   final double opacity;
 
   @override
@@ -185,7 +177,7 @@ class _SkeletonRow extends StatelessWidget {
                     child: _SkeletonBar(
                       width: (col.width ?? 100) * 0.6,
                       height: 12,
-                      color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                      color: barColor,
                     ),
                   ),
                 ),
@@ -237,7 +229,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              message ?? 'لا توجد بيانات',
+              message ?? AppLocalizations.of(context)!.noData,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Theme.of(context).colorScheme.outline,
               ),
