@@ -73,3 +73,15 @@ A global HTTP interceptor handles repetitive tasks automatically. Do not write m
 - **Success Notifications**: Displaying success alerts on POST, PUT, and DELETE operations.
 - **Error Handlers**: Catching network errors and showing error toasts.
 - **Session Expiry**: Logging out and redirecting to the sign-in page on 401 statuses.
+
+---
+
+## 🚀 Setup & AI Bootstrapping (SETUP_PROMPT.md)
+
+For initializing new projects or scaffolding entire modules from scratch, this starter kit includes a dedicated automation template:
+
+- **SETUP_PROMPT.md**: A pre-configured prompt wrapper designed for AI assistants to bootstrap a new client application. It maps out variables (App Name, Brand Colors, Target Features) and guides the AI step-by-step through:
+  - Global branding variables updates.
+  - Localization defaults configuration.
+  - Multi-feature scaffolding checklist conforming to the standard directory layout.
+  - Structural routing and navigation registration.
